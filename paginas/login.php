@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
+    <link rel="stylesheet"href="style.css">
 </head>
 <body>
 
@@ -33,7 +34,7 @@
                     $_SESSION["user_name"] = $user_name;
                     $_SESSION["perfil"] = $registo["perfil"];
                     $_SESSION["id"] = $registo["id_utilizador"];
-                    echo "Login bem-sucedido. Redirecionando...";
+                    echo "<h2 style='text-align:center;'>Login bem-sucedido. Redirecionando...</h2>";
 
                     switch ($registo["perfil"]) {
                         case 'aluno':

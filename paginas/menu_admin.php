@@ -3,12 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Admin</title>
+	<title>Menu Administrador</title>
+	
 </head>
 <body>
 
-</body>
-</html>
+
 <?php
 	ob_start();
 	include_once("../basedados/basedados.h");
@@ -129,7 +129,8 @@
 		header("refresh:3;url=index.php");
 		}	
 	mysqli_close($conn);
-	
 
-		
 ?>
+
+</body>
+</html>

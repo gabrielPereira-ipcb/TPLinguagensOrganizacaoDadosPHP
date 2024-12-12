@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="estilo.css">
+        <body>
+            
+        
+
 <?php
     include_once("../basedados/basedados.h");
 	session_start();
@@ -19,7 +27,7 @@
 		        $resultado=$conn->query($sql);
                 
 		        if($resultado){
-                    echo "Inscrição realizada com sucesso!<br>";
+                    echo "<h2 style='text-align:center;'>Inscrição realizada com sucesso!</h2>";
                     $perfil_utilizador = $_SESSION['perfil'];
                     switch ($perfil_utilizador) {
                         case 'aluno':
@@ -60,3 +68,7 @@
         header("refresh:0; url=index.php");
     }
 ?>
+
+        </body>
+    </head>
+</html>

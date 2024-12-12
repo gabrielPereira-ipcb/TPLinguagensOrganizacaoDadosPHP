@@ -13,7 +13,7 @@
         $resultado=$conn->query($sql);
         
         if($resultado){
-            echo "Cancelamento realizado com sucesso!<br>";
+            echo "<h2 style='text-align:center;'>Cancelamento realizado com sucesso!</h2>";
 
             $perfil = $_SESSION["perfil"];
             switch ($perfil) {

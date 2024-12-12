@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        ´<link rel="stylesheet" href="estilo.css">
+        <body>
+            
+        
 <?php
     include_once("../basedados/basedados.h");
 	session_start();
@@ -15,7 +22,7 @@
         $sql2 = "DELETE FROM cursos WHERE id_curso = $id_curso";
         $resultado2=$conn->query($sql2);
         if($resultado && $resultado2){
-            echo "Cancelamento realizado com sucesso!<br>";
+            echo "<h2 style='text-align:center;'>Cancelamento realizado com sucesso!</h2>";
 
             if($perfil == "docente"){
                 
@@ -36,3 +43,7 @@
 
 		mysqli_close($conn);
 ?>
+
+        </body>
+    </head>
+</html>
