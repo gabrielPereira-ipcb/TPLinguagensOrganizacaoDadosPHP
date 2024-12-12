@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Menu Administrador</title>
+	<link rel="stylesheet" href="estilo.css">
 	
 </head>
 <body>
@@ -15,40 +16,155 @@
 	session_start();
 	
 	if (isset($_SESSION['perfil'])&&$_SESSION['perfil']=='admin') {
-		echo "<a href='logout.php'>Logout</a>";
-		echo "<h1>Bem-vindo ".$_SESSION['user_name']."</h1><h4> Voce esta na pagina do admin</h4><br><br>";
+		echo "<header>Página do administrador</header>";
+		//pagina toda
+		echo '<div class="container">';
+		echo '<div class="button-group">';
+		
+		
+		echo "	<a href='logout.php'>Logout</a>
+				<a href='editar_perfil.php'>Editar Perfil<br></a>
+				<a href='cursos_admin.php'>Cursos<br></a>
+				</div>";
+		echo "<h1 style='text-align:center;'>Bem-vindo ".$_SESSION['user_name']."</h1>";
+		
+		echo "	
+			</div>";
 
-		echo "<a href='editar_perfil.php'>Editar Perfil<br></a>";
-		echo "<a href='cursos_admin.php'>Cursos<br></a>";
-
+		
+		
 		?>
-		<div class="form-container">
-        <h2>Registar Utilizador</h2>
-        <form action="registo.php" method="post">
-			<input type="hidden" name="isDocente" value="true"> <!-- forma para saber se é docente -->
-            Nome: <input type="text" name="nome" style="margin-bottom: 10px;"><br>      
-            Último nome: <input type="text" name="ultimo_nome"style="margin-bottom: 10px;"><br>      
-            E-mail: <input type="text" name="e_mail"style="margin-bottom: 10px;"><br>
-            User_name: <input type="text" name="user_name"style="margin-bottom: 10px;"><br>
-            Password: <input type="password" name="password"style="margin-bottom: 10px;"><br>
-            Perfil:
-            <select name="perfil" style="margin-bottom: 10px;">
-                <option value="aluno">Aluno</option>
-                <option value="docente">Docente</option>
-                <option value="admin">Administrador</option>
-            </select><br>
-            <input type="submit" value="Registar">
-        </form>
-    </div>
+		<div class="container">
+			<div class="card">
+				<h2>Registar Utilizador</h2>
+				<form action="registo.php" method="post"  style=" width: 50%;">
+					<input type="hidden" name="isDocente" value="true"> <!-- forma para saber se é docente -->
+					Nome: <input type="text" name="nome" style="margin-bottom: 10px;"><br>      
+					Último nome: <input type="text" name="ultimo_nome"style="margin-bottom: 10px;"><br>      
+					E-mail: <input type="text" name="e_mail"style="margin-bottom: 10px;"><br>
+					User_name: <input type="text" name="user_name"style="margin-bottom: 10px;"><br>
+					Password: <input type="password" name="password"style="margin-bottom: 10px;"><br>
+					Perfil:
+					<select name="perfil" style="margin-bottom: 10px;">
+						<option value="aluno">Aluno</option>
+						<option value="docente">Docente</option>
+						<option value="admin">Administrador</option>
+					</select><br>
+					<input type="submit" value="Registar">
+				</form>
+			</div>
+    	</div>
+
+		<div class="container">
+			<div class="card">
+			
+
+		
 		<?php
-
 		//query para achar os utilizadores que ainda nao foram autenticados
-		$sql = "SELECT * FROM utilizadores WHERE autenticado = false";
+		$sql_false = "SELECT * FROM utilizadores WHERE autenticado = false";
+		$resultado_false = mysqli_query($conn, $sql_false);
 
-		$resultado = mysqli_query($conn, $sql);
 
-		if ($resultado && mysqli_num_rows($resultado) >0) {
+		if ($resultado_false && mysqli_num_rows($resultado_false) >0) {
 			echo "<h2> Pedidos Pendentes </h2>";
+
+			$xml_n_autenticados = new DOMDocument('1.0', 'UTF-8');
+			$root_n_autenticados = $xml_n_autenticados->createElement("nao_autenticados");
+			$xml_n_autenticados->appendChild($root_n_autenticados);
+
+			// print_r($resultado_false);
+			$show_col = "SHOW COLUMNS FROM utilizadores";
+			$res_show_col = mysqli_query($conn,$show_col);
+			$n_col=0;
+
+			while ($row_col = mysqli_fetch_array($res_show_col)) {
+				$nome_col[$n_col++]=$row_col[0];
+				
+			}
+			// print_r($nome_col);
+			// print_r($resultado_false);
+
+			$t_n_autenticados = $xml_n_autenticados->createElement("tabela_nao_autenticados");
+			$root_n_autenticados->appendChild($t_n_autenticados);
+			
+			$iteracao=0;
+			while ($row=mysqli_fetch_array($resultado_false)) {
+				// print_r($row);
+				$utilizador_n_autenticado = $xml_n_autenticados->createElement("utilizador_nao_autenticado");
+				$t_n_autenticados->appendChild($utilizador_n_autenticado);
+				// print_r("numero de iteracoes".$iteracao);
+				$iteracao++;
+
+				for ($i=0; $i < $n_col; $i++) { 
+					// print_r($nome_col[$i].": ".$row[$nome_col[$i]]." ");
+					$col = $xml_n_autenticados->createElement($nome_col[$i], htmlspecialchars($row[$nome_col[$i]]));
+        			$utilizador_n_autenticado->appendChild($col);
+					
+					
+				}
+				
+				// print_r("<br>");
+				// print_r($nome_col);
+				// print_r($utilizador_n_autenticado);
+				$link_autenticar =$xml_n_autenticados->createElement("autenticar",htmlspecialchars("autenticar_utilizador.php?id=".$row["id_utilizador"]."&e_mail=".$row["e_mail"]."&user_name=".$row["user_name"].""));
+				$utilizador_n_autenticado->appendChild($link_autenticar);
+
+				$link_confirmacao =$xml_n_autenticados->createElement("confirmar",htmlspecialchars("confirmacao.php?id=".$row["id_utilizador"]."&e_mail=".$row["e_mail"]."&user_name=".$row["user_name"].""));
+				$utilizador_n_autenticado->appendChild($link_confirmacao);
+				// print_r($utilizador_n_autenticado);
+				// var_dump($utilizador_n_autenticado);  
+			}
+
+			// print_r($utilizador_n_autenticado);
+			// print_r($res_show_col);
+			// echo $xml_n_autenticados->saveXML();
+			// echo "<pre>" . htmlspecialchars($xml_n_autenticados->saveXML()) . "</pre>";
+			
+			$xslt_n_autenticados = new DOMDocument();
+			$xslt_n_autenticados-> loadXML('<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+            <body>
+                <table>
+                    <tr>
+                        <xsl:for-each select="nao_autenticados/tabela_nao_autenticados/utilizador_nao_autenticado[1]/*">
+                            <xsl:if test="name() != \'password\' and name() != \'autenticado\' and name() != \'autenticar\' and name() != \'confirmar\'">
+                                <th><xsl:value-of select="name()"/></th>
+                            </xsl:if>
+                        </xsl:for-each>
+						<th>Ação</th>
+                        <th>Ação</th>
+                    </tr>
+                    <xsl:for-each select="nao_autenticados/tabela_nao_autenticados/utilizador_nao_autenticado">
+                        <tr>
+                            <xsl:for-each select="*">
+                                <xsl:if test="name() != \'password\' and name() != \'autenticado\' and name() != \'autenticar\' and name() != \'confirmar\'">
+                                    <td><xsl:value-of select="."/></td>
+                                </xsl:if>
+                            </xsl:for-each>
+                            <td>
+                                <a href="{autenticar}">Autenticar</a>
+                                
+                            </td>
+							<td>
+								<a href="{confirmar}">Cancelar</a>
+							</td>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>');
+
+		$xslt_processor_n_autenticados = new XSLTProcessor();
+		$xslt_processor_n_autenticados->importStylesheet($xslt_n_autenticados);
+		echo $xslt_processor_n_autenticados->transformToXml($xml_n_autenticados);
+
+
+			/*
 			echo "<table border='1'>";
 			echo "  <tr>
 						<th>ID</th>
@@ -77,18 +193,29 @@
 
 				}
 				echo "</table>";
-
-			} else {
+				*/
+		 	} else {
 				echo "<h4>Não há pedidos pendentes<br></h4>";
 				
+				
 			}
+		
+
+		?>
+			</div>
+		</div>
+
+
+		<div class="container">
+			<div class="card">
+		<?php
 		
 		//query para pegar todos os utilizadores autenticados
 		$autenticados= "SELECT * FROM utilizadores WHERE autenticado = true";
 
 		$resultado_autenticados = mysqli_query($conn, $autenticados);
 
-		if ($resultado && mysqli_num_rows($resultado_autenticados) >0) {
+		if ($resultado_autenticados && mysqli_num_rows($resultado_autenticados) >0) {
 			echo "<h2> Utilizadores autenticados </h2>";
 			echo "<table border='1'>";
 			echo "  <tr>
@@ -130,7 +257,10 @@
 		}	
 	mysqli_close($conn);
 
-?>
 
+
+?>
+		</div>
+	</div>
 </body>
 </html>

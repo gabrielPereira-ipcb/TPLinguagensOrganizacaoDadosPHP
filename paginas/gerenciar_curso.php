@@ -194,6 +194,9 @@
 			$rootInscritos = $xmlInscritos->createElement("alunos");
 			$xmlInscritos->appendChild($rootInscritos);
 
+			
+
+
 			$sql_col2 = "SHOW COLUMNS FROM utilizadores";
 			$res_col2 = mysqli_query($conn,$sql_col2);
 			$n_col=0;
@@ -209,7 +212,8 @@
 
 				$tAluno = $xmlInscritos->createElement("tabela_aluno");
 				$rootInscritos->appendChild($tAluno);
-	
+				
+			
 				while ($row=mysqli_fetch_array($resultado_select_alunos2)) {
 					$aluno = $xmlInscritos->createElement("aluno");
 					$tAluno->appendChild($aluno);
@@ -221,6 +225,8 @@
 					$link_gerir_inscrito = $xmlInscritos->createElement("gerir_inscrito",htmlspecialchars("cancelar_inscricao.php?id_curso=".$id_curso."&id_utilizador=".$row[0]));
 					$aluno->appendChild($link_gerir_inscrito);
 				}
+
+				// echo $xmlInscritos->saveXML();
 
 
 		$xsltInscritos = new DOMDocument();
