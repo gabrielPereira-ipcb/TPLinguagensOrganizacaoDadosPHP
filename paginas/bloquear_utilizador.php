@@ -30,8 +30,9 @@
 		$resultado = mysqli_query($conn, $sql);
 
 		if ($resultado) {
-			echo "<h4>Utilizador com id=".$id_utilizador."<br>user_name=".$user_name." <br>e-mail=".$email_utilizador."</h4>foi bloqueado!<br>";
-			echo "<a href='menu_admin.php'>Voltar para página admin</a>";
+			// echo "<h4>Utilizador com id=".$id_utilizador."<br>user_name=".$user_name." <br>e-mail=".$email_utilizador."</h4>foi bloqueado!<br>";
+			// echo "<a href='menu_admin.php'>Voltar para página admin</a>";
+			header("refresh:0;url=menu_admin.php");
 		}
 		mysqli_close($conn);
 		

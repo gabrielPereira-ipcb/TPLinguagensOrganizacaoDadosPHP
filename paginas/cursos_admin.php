@@ -156,7 +156,7 @@
     <div class="container">    
     <div class="card">
         <h2>Criar Curso</h2>
-		<form action="criar_curso.php" method="POST" style="width:90%;">
+		<form action="criar_curso.php" method="POST" style="width:50%;">
 			Id do docente<input type="number" name="id"><br>
 			Nome Curso: <input type="text" name="nome_curso"><br>
 			Descrição: <textarea name="descricao" rows="3" cols="100"></textarea><br>

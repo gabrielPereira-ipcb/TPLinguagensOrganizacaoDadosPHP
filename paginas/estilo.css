@@ -43,23 +43,72 @@ header {
 h2 {
     margin-top: 0;
 }
-form input, form select, form button {
+
+/* Centralizar o contêiner e itens */
+.form-registo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px; /* Tamanho máximo para o formulário */
+    background-color: #f9f9f9; /* Cor de fundo */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-registo h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilo para os rótulos */
+.form-registo label {
+    width: 100%;
+    text-align: left; /* Alinha os rótulos à esquerda */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilo para os inputs e selects */
+.form-registo input,
+.form-registo select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-form button {
+
+/* Estilo para o botão de submit */
+.form-registo input[type="submit"] {
     background-color: #28a745;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    border-radius: 5px;
+    padding: 10px;
 }
-form button:hover {
+
+.form-registo input[type="submit"]:hover {
     background-color: #218838;
 }
+
+/* Responsividade */
+@media (max-width: 500px) {
+    .form-registo {
+        width: 90%;
+    }
+}
+
+
+
+
 table {
     width: 100%;
     border-collapse: collapse;

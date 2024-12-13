@@ -39,7 +39,7 @@
             $resultado = mysqli_query($conn, $sql);
 
             if ($resultado) {
-                echo "Curso ".$nome_curso." atualizado com sucesso!<br>";
+                // echo "Curso ".$nome_curso." atualizado com sucesso!<br>";
                 #$_SESSION["user_name"] = $new_user_name;
                 $home_page_perfil = null;
                 switch ($tipo_perfil) {
@@ -53,7 +53,7 @@
                                     break;
                             }
 
-                    header("refresh:2;url='$home_page_perfil'");
+                    header("refresh:0;url='$home_page_perfil'");
             }
             mysqli_close($conn);
     }

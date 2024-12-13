@@ -4,19 +4,29 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Docente</title>
+	<link rel="stylesheet" href="estilo.css?v=1.0">
 
 </head>
-<div>
+
 <?php
 	ob_start();
 	include_once("../basedados/basedados.h");
 	session_start();
 	
 	if (isset($_SESSION['perfil'])&&$_SESSION['perfil']=='docente') {
+		echo "<header>Página do administrador</header>";
+		
 		echo "	<div class='container'>
-				<a href='logout.php'>Logout</a>
-				<a href='editar_perfil.php'>Editar Perfil</a>
-				<h1>Bem-vindo ".$_SESSION['user_name']."</h1>";
+					<div class='button-group'>
+						<a href='logout.php'>Logout</a>
+						<a href='editar_perfil.php'>Editar Perfil</a>
+					</div>
+					
+				<h1 style='text-align:center;'>Bem-vindo ".$_SESSION['user_name']."</h1>
+				</div>";
+
+
+					
 
 		
 
@@ -98,6 +108,25 @@
 		</xsl:template>
 		</xsl:stylesheet>');
 
+?>
+		<div class="form-registo">
+			<h2>Criar Curso</h2>
+			<form action="criar_curso.php" method="POST" >
+				<input type="hidden" name="id" value="<?php echo $_SESSION['id']; ?>">
+				Nome Curso: <input type="text" name="nome_curso" rows="1"><br>
+				Descrição: <textarea name="descricao" rows="1" cols="50"></textarea><br>
+				Preço: <input type="number" name="preco"><br>
+				Vagas: <input type="number" name="vagas_totais"><br>
+				<input type="submit" value="Criar Curso">
+			</form>
+		</div>
+
+	<div class="container">
+		<div class="card">
+
+		
+<?php
+
 $xslt_processor = new XSLTProcessor();
 $xslt_processor->importStylesheet($xslt);
 echo $xslt_processor->transformToXml($xml);
@@ -149,17 +178,14 @@ echo $xslt_processor->transformToXml($xml);
 			echo "<h2 style='max-width: 400px; margin: 0 auto; padding: 20px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);'>Criar curso:</h2>";	
 			*/
 		?>
-	
-		<form action="criar_curso.php" method="POST" >
-			<input type="hidden" name="id" value="<?php echo $_SESSION['id']; ?>">
-			Nome Curso: <input type="text" name="nome_curso" rows="1"><br>
-			Descrição: <textarea name="descricao" rows="1" cols="50"></textarea><br>
-			Preço: <input type="number" name="preco"><br>
-			Vagas: <input type="number" name="vagas_totais"><br>
-			<input type="submit" value="Criar Curso">
-		</form>
-
+		
+		</div>
 	</div>
+
+
+	
+
+
     <?php
 	
 	

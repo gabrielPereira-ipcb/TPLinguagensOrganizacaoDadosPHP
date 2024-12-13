@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Editar Perfil</title>
+    <link rel="stylesheet" href="estilo.css?v=1.0">
 </head>
 <body>
 
@@ -14,7 +15,12 @@
     session_start();
 
     if (isset($_SESSION['id'])&& ($_SESSION['perfil'] == 'aluno' || $_SESSION['perfil'] == 'docente' || $_SESSION['perfil'] == 'admin')) {
-        echo "<a href='logout.php'>Logout</a>";
+        echo "
+                <header>Editar dados pessoais</header>
+                <div class='container'>
+                    <div class='button-group'>
+        
+                        <a href='logout.php'>Logout</a>";
 		$home_page_perfil= null;
 		switch ($_SESSION["perfil"]) {
 			case 'aluno':
@@ -31,8 +37,13 @@
 				break;
 			}
 
-        echo "<br><a href='$home_page_perfil'>Home Page</a>";
-		echo"<br><h1>Editar dados pessoais</h1>";
+        echo "<a href='$home_page_perfil'>Home Page</a>
+        
+                    </div>
+                </div>";
+
+
+		
 		$id = $_SESSION['id'];
         $user_name = $_SESSION['user_name'];
 
@@ -44,14 +55,17 @@
         if ($resultado && mysqli_num_rows($resultado)>0) {
             $linha = mysqli_fetch_assoc($resultado);
     ?>
-    <form action="atualizar_perfil.php" method="POST">
-        <input type="hidden" name="id_utilizador" value="<?php echo $linha['id_utilizador']; ?>">
-        Nome: <input type="text" name="nome" value="<?php echo $linha['nome']; ?>"><br>
-        Último nome: <input type="text" name="ultimo_nome" value="<?php echo $linha['ultimo_nome']; ?>"><br>
-        User name: <input type="text" name="user_name" value="<?php echo $linha['user_name']; ?>"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Atualizar">
-    </form>
+
+    <div class="form-registo">
+        <form action="atualizar_perfil.php" method="POST">
+            <input type="hidden" name="id_utilizador" value="<?php echo $linha['id_utilizador']; ?>">
+            Nome: <input type="text" name="nome" value="<?php echo $linha['nome']; ?>"><br>
+            Último nome: <input type="text" name="ultimo_nome" value="<?php echo $linha['ultimo_nome']; ?>"><br>
+            User name: <input type="text" name="user_name" value="<?php echo $linha['user_name']; ?>"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="submit" value="Atualizar">
+        </form>
+    </div>
     <?php
         } else {
             echo "Erro ao buscar dados do utilizador.";

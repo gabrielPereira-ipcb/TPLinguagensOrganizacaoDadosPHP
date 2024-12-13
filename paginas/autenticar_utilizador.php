@@ -28,8 +28,9 @@
 		$resultado = mysqli_query($conn, $sql);
 
 		if ($resultado) {
-			echo "Utilizador com id=".$id_utilizador.", user_name=".$user_name." e e-mail=".$email_utilizador." foi autenticado!<br>";
-			echo "<a href='menu_admin.php'>Voltar para página admin</a>";
+			// echo $user_name ."foi autenticado!<br>";
+			// echo "<a href='menu_admin.php'>Voltar para página admin</a>";
+			header("refresh:0;url=menu_admin.php");
 		}
 		mysqli_close($conn);	
 

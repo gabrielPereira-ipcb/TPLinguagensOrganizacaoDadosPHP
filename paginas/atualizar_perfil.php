@@ -29,9 +29,9 @@
             $resultado = mysqli_query($conn, $sql);
 
             if ($resultado) {
-                echo "Utilizador com id=".$id_utilizador." atualizado com sucesso!<br>
-                Antigo user_name=".$old_user_name." <br>
-                Novo user_name= ".$new_user_name."<br>";
+                // echo "Utilizador com id=".$id_utilizador." atualizado com sucesso!<br>
+                // Antigo user_name=".$old_user_name." <br>
+                // Novo user_name= ".$new_user_name."<br>";
                 $_SESSION["user_name"] = $new_user_name;
                 $home_page_perfil = null;
                 switch ($tipo_perfil) {
@@ -49,7 +49,7 @@
                                     break;
                             }
 
-                    echo "<br><a href='$home_page_perfil'>Home Page</a>";
+                            header("refresh:0;url='$home_page_perfil'");
             }
         mysqli_close($conn);
         

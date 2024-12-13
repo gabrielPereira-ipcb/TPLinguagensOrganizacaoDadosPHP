@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Gerir Curso</title>
-	<link rel="stylesheet"href="estilo.css">
+	<link rel="stylesheet" href="estilo.css?v=1.0">
 	
 </head>
 <body>
@@ -43,10 +43,8 @@
 			$row = mysqli_fetch_assoc($resultado_curso);
 
 		?>
-		<div class="card">
-
-		
-			<form action="atualizar_curso.php" method="POST" style=" width: 50%;">
+		<div class="form-registo">
+			<form action="atualizar_curso.php" method="POST">
 				<input type="hidden" name="id_curso" value="<?php echo $id_curso; ?>">
 				<input type="hidden" name="vagas_disponiveis" value="<?php echo $row["vagas_disponiveis"]; ?>">
 				<input type="hidden" name="vagas_totais_antigas" value="<?php echo $row["vagas_totais"]; ?>">
@@ -56,7 +54,6 @@
 				Vagas Totais<input type="number" name="vagas_totais" value= "<?php echo $row['vagas_totais'];?>">
 				Vagas Disponíveis: <?php echo $row['vagas_disponiveis'];?>
 				<input type="submit" value="Atualizar curso">
-
 			</form>
 		</div>
 		<?php
