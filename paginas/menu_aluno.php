@@ -4,12 +4,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Aluno</title>
+	<link rel="stylesheet" href="estilo.css?v=1.0">
 	
 </head>
 <body>
 
-</body>
-</html>
+
 <?php
 	ob_start();
 	include_once("../basedados/basedados.h");
@@ -17,10 +17,16 @@
 	
 	
 	if (isset($_SESSION['perfil'])&&$_SESSION['perfil']=='aluno') {
-		echo "<a href='logout.php'>Logout</a>";
-		echo "<h1>Bem-vindo ".$_SESSION['user_name']."</h1><h4> Você está na página do aluno</h4>";
+		echo "<header> Página do aluno</header>";
+		
+		//echo "<h1>Bem-vindo ".$_SESSION['user_name']."</h1>";
 		$id_aluno = $_SESSION['id'];
-		echo "<a href='editar_perfil.php'>Editar Perfil<br></a><br>";
+		echo "<div class='container'>
+					<div class='button-group'>
+				<a href='logout.php'>Logout</a>
+				<a href='editar_perfil.php'>Editar Perfil</a>
+				
+				</div>";
 		#$conn = conectar_bd();
 		
 		
@@ -89,11 +95,12 @@
 						echo "<td>".substr($linha["descricao"],0,50)."</td>";
 						echo "<td>€".$linha["preco"]."</td>";
 						echo "<td>".$linha["vagas_disponiveis"]."</td>";
-						echo "<td><a href='inscrever_curso.php?id_curso=".$linha["id_curso"]."&id_aluno=".$id_aluno."'>Insrever-se</a></td>";
+						echo "<td><a href='inscrever_curso.php?id_curso=".$linha["id_curso"]."&id_aluno=".$id_aluno."'>Inscrever-se</a></td>";
 					echo "</tr>";
 
 				}
-				echo "</table>";
+				echo "</table>
+				</div>";
 		}
 
 
@@ -104,3 +111,6 @@
 
 	mysqli_close($conn);
 ?>
+
+</body>
+</html>

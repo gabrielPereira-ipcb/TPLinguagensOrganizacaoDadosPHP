@@ -267,41 +267,8 @@
 		echo $xslt_processor2->transformToXml($xmlInscritos);
 
 		echo "</div>";
-			/*
-			echo "<table>";
-			echo "  <tr>
-				<th>Id inscricao</th>
-				<th>Id aluno</th>
-				<th>Nome aluno</th>
-				<th>Data</th>
-				<th>Acao</th>
-				<th>Acao</th>
-			</tr>";
-				while ($linha = mysqli_fetch_assoc($resultado)) {
-					$id_aluno = $linha["id_utilizador"];
-
-					
 			
-					echo "<tr>";
-
-						echo "<td>".$linha["id_inscricao"]."</td>";
-						echo "<td>".$linha["id_utilizador"]."</td>";
-
-						$sql = "SELECT nome FROM utilizadores WHERE id_utilizador =".$id_aluno."";
-
-						$resultado_nome_aluno = mysqli_fetch_assoc(mysqli_query($conn,$sql));
-						$nome_aluno = $resultado_nome_aluno["nome"];
-						echo "<td>".$nome_aluno."</td>";
-						echo "<td>".$linha["data_inscricao"]."</td>";
-						echo "<td><a href='cancelar_inscricao.php?id_curso=".$id_curso."&id_utilizador=".$id_aluno."'>Cancelar</a></td>";
-						echo "<td><a href='mudar_data.php?id_inscricao=".$linha['id_inscricao']."&id_curso=".$id_curso."'>Mudar data </a></td>";
-					echo "</tr>";
-
-				}
-				echo "</table>";
-
-			*/
-
+		}	
 			} else {
 				echo "<h4>Este curso ainda não tem incrições!<br></h4>";
 				
@@ -314,7 +281,7 @@
 		echo "Problemas com autenticação";
 		header("refresh:3;url=index.php");
 	}
-}
+
 		
 ?>
 </body>

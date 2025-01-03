@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" href="estilo.css?v=1.0">
+        <body>
+            
+
 <?php
 	include_once("../basedados/basedados.h");
 	session_start();
@@ -13,9 +20,10 @@
         
         $tipo_perfil = $_SESSION["perfil"];
         
-        #$password = $_POST['password'];
+        
         if (empty($nome_curso)||empty($descricao)||empty($preco)||empty($vagas_totais)) {
-            echo "Não pode haver valores vazios";
+            echo "<h2 style='text-align:center;'>Não pode haver valores vazios</h2>";
+            
 
             if ($tipo_perfil == "docente") {
                 header("refresh:3;url=menu_docente.php");
@@ -26,21 +34,22 @@
         }else{
 
             
-            #$conn = conectar_bd();
+        
 
             $sql = "INSERT INTO cursos (id_utilizador, nome_curso, descricao, preco,vagas_disponiveis, vagas_totais) VALUES ('$id_utilizador', '$nome_curso', '$descricao',' $preco', '$vagas_totais', '$vagas_totais')";
 
             $resultado = mysqli_query($conn, $sql);
 
             if ($resultado) {
-                echo "Curso ".$nome_curso." criado com sucesso!<br>";
+                echo "<h2 style='text-align:center;' >Curso ".$nome_curso." criado com sucesso!</h2><br>";
                 if ($tipo_perfil == "docente") {
-                    echo "<br><a href=menu_docente.php>Home Page</a>";
-                    header("refresh:3;url=menu_docente.php");
+                    echo "<div class='button-group' style='text-align:center;'><a href=menu_docente.php>Home Page</a>
+                            </div>";
+                    //header("refresh:0;url=menu_docente.php");
                 }
                 else
                 echo "<br><a href=menu_admin.php>Home Page</a>";
-                header("refresh:3;url=menu_admin.php");
+                //header("refresh:0;url=menu_admin.php");
                 
             }
             mysqli_close($conn);
@@ -52,3 +61,7 @@
 
 	
 ?>
+
+        </body>
+    </head>
+</html>

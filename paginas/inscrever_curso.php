@@ -56,7 +56,7 @@
                     echo "houve problema com a insercao na base de dados".mysqli_error($conn);
 		            }
             } else {
-                echo "Nao podes mais se inscrever a este curso";
+                echo "Nao é possível a inscrição neste curso, contacte-nos! ";
                 header("refresh:5 ; url=menu_aluno.php");
                 }
         

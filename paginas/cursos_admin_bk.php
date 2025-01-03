@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Docentes e cursos</title>
-    <link rel="stylesheet" href="estilo.css?v=1.0">
+    <link rel="stylesheet" href="estilo.css">
         <body>
             
             
@@ -49,7 +49,7 @@
         /**
          * Este bloco de codigo faz:
          *  1. faz select dos docentes para saber suas infos
-         *  2. cria um elemento "tabela_docente" que é filho da root "docente"
+         *  2. cria um elemento "tabela_docente" que é filha da root "docente"
          *  3. no while vai criar para cada resultado do select uma variavel docente
          *  que sera filha da tabela docente
          *  4. o fluxo for vai criar os conteudos de cada coluna de cada docente e 
@@ -58,7 +58,7 @@
         $select_docentes = "SELECT * FROM utilizadores WHERE perfil = 'docente'";
 		$resultado_select_docentes = mysqli_query($conn, $select_docentes);
 
-        //TODO FEITO mudar esta visualização 
+        // mudar esta visualização
 		if ($resultado_select_docentes && mysqli_num_rows($resultado_select_docentes) >0) {
 
             $tabela_docente = $xml->createElement("tabela_docente");
@@ -117,6 +117,33 @@
         echo "
                 </div>
             </div>";        
+                /*
+			echo "<h2>Lista de docentes:</h2>";
+			echo "<table border='1'>";
+			echo "  <tr>
+						<th>ID</th>
+						<th>Nome</th>
+						<th>Último Nome</th>
+						<th>E-mail</th>
+						<th>User Name</th>
+
+					</tr>";
+			
+
+				while ($linha = mysqli_fetch_assoc($resultado)) {
+					echo "<tr>";
+
+						echo "<td>".$linha["id_utilizador"]."</td>";
+						echo "<td>".$linha["nome"]."</td>";
+						echo "<td>".$linha["ultimo_nome"]."</td>";
+						echo "<td>".$linha["e_mail"]."</td>";
+						echo "<td>".$linha["user_name"]."</td>";
+					echo "</tr>";
+
+				}
+				echo "</table>";
+
+*/
 
 			} else {
 				echo "<h4>Ainda não há docentes<br></h4>";
@@ -126,36 +153,19 @@
         
     
         ?>
-    
-            
-                <form class="form-curso" action="criar_curso.php"  method="POST">
-                    <h2>Criar Curso</h2>
-                    <label>Escolha um docente:</label>
-                    <select name="id">
-                    
-                        <option value="">Selecione um docente</option>
-                        <?php
-                        $select_docentes = "SELECT * FROM utilizadores WHERE perfil = 'docente'";
-                        $resultado_select_docentes = mysqli_query($conn, $select_docentes);
-                        if ($resultado_select_docentes && mysqli_num_rows($resultado_select_docentes) > 0) {
-                            while ($docente = mysqli_fetch_assoc($resultado_select_docentes)) {
-                                echo "<option value='{$docente['id_utilizador']}'>{$docente['user_name']}</option>";
-                            }
-                        } else {
-                            echo "<option value=''>Nenhum docente encontrado</option>";
-                        }
-                        ?>
-                    </select>
-                    <br>
-                    <!-- Id do docente<input type="number" name="id"><br> -->
-                    Nome Curso: <input type="text" name="nome_curso" ><br>
-                    Descrição: <textarea name="descricao" rows="3" cols="100"></textarea><br>
-                    Preço: <input type="number" name="preco" min="0"><br>
-                    Vagas: <input type="number" name="vagas_totais" min="0"><br>
-                    <input type="submit" value="Criar Curso">
-                </form>
-            </div>
-        
+    <div class="container">    
+    <div class="card">
+        <h2>Criar Curso</h2>
+		<form action="criar_curso.php" method="POST" style="width:50%;">
+			Id do docente<input type="number" name="id"><br>
+			Nome Curso: <input type="text" name="nome_curso"><br>
+			Descrição: <textarea name="descricao" rows="3" cols="100"></textarea><br>
+			Preço: <input type="number" name="preco"><br>
+			Vagas: <input type="number" name="vagas_totais"><br>
+			<input type="submit" value="Criar Curso">
+		</form>
+    </div>
+    </div>
     <?php
 
         /**

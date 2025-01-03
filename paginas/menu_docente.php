@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="estilo.css?v=1.0">
 
 </head>
+<body>
 
 <?php
 	ob_start();
@@ -14,7 +15,7 @@
 	session_start();
 	
 	if (isset($_SESSION['perfil'])&&$_SESSION['perfil']=='docente') {
-		echo "<header>Página do administrador</header>";
+		echo "<header>Página do Docente</header>";
 		
 		echo "	<div class='container'>
 					<div class='button-group'>
@@ -98,7 +99,7 @@
 								</xsl:for-each>
 								<!-- Botão de ação -->
 								<td>
-									<a href="{gerenciar_curso}">Gerenciar</a>
+									<a href="{gerenciar_curso}">Gerir</a>
 								</td>
 							</tr>
 						</xsl:for-each>

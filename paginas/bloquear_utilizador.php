@@ -23,18 +23,40 @@
 		$user_name = $_GET["user_name"];
 
 
-		#$conn = conectar_bd();
+    // Limpeza dos dados para evitar SQL Injection
+    $id_utilizador = mysqli_real_escape_string($conn, $id_utilizador);
 
-		$sql = "UPDATE utilizadores SET autenticado = 0 WHERE id_utilizador = $id_utilizador";
+    // Verifica se existe pelo menos outro administrador autenticado
+    $sql = "SELECT COUNT(*) AS total_admins 
+            FROM utilizadores 
+            WHERE perfil = 'admin' AND autenticado = 1 AND id_utilizador != $id_utilizador";
+    $resultado = mysqli_query($conn, $sql);
 
-		$resultado = mysqli_query($conn, $sql);
+    if ($resultado) {
+        $row = mysqli_fetch_assoc($resultado);
 
-		if ($resultado) {
-			// echo "<h4>Utilizador com id=".$id_utilizador."<br>user_name=".$user_name." <br>e-mail=".$email_utilizador."</h4>foi bloqueado!<br>";
-			// echo "<a href='menu_admin.php'>Voltar para página admin</a>";
-			header("refresh:0;url=menu_admin.php");
-		}
-		mysqli_close($conn);
-		
-	}
+        if ($row['total_admins'] > 0) {
+            // Atualiza o estado do utilizador para não autenticado
+            $sql_update = "UPDATE utilizadores SET autenticado = 0 WHERE id_utilizador = $id_utilizador";
+            $resultado_update = mysqli_query($conn, $sql_update);
+
+            if ($resultado_update) {
+                header("refresh:0;url=menu_admin.php");
+            } else {
+                echo "<h4>Ocorreu um erro ao tentar bloquear o utilizador.</h4>";
+            }
+        } else {
+            // Não há outro admin autenticado
+            echo "<div class='container'>
+                    <h4>Não é possível bloquear este utilizador porque não existe outro administrador autenticado.</h4>
+                    <a href='menu_admin.php'>Voltar</a>
+                  </div>";
+        }
+    } else {
+        echo "<h4>Erro ao verificar administradores.</h4>";
+    }
+
+    // Fecha a ligação à base de dados
+    mysqli_close($conn);
+}
 ?>
